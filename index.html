@@ -1,15 +1,79 @@
 <!doctype html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="theme-color" content="#142b46" />
-    <meta name="description" content="Gestor privado de tarifas funerarias" />
-    <link rel="apple-touch-icon" href="/icon-192.png" />
-    <title>FUNERARIOS ASV</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#173653">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="FUNERARIOS ASV">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" href="./icon-192.png">
+<title>FUNERARIOS ASV</title>
+<style>
+:root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#172b3d;background:#f3f6f8}
+*{box-sizing:border-box}body{margin:0;padding-bottom:30px}header{background:#173653;color:#fff;padding:calc(18px + env(safe-area-inset-top)) 18px 20px;border-radius:0 0 22px 22px}.brand{display:flex;align-items:center;gap:12px}.logo{width:43px;height:43px;border-radius:13px;background:#fff;color:#173653;display:grid;place-items:center;font-weight:900}.brand h1{font-size:17px;margin:0;letter-spacing:.04em}.brand p{font-size:12px;color:#d5e2ed;margin:3px 0 0}
+main{max-width:720px;margin:auto;padding:15px}.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:14px}.tab{border:0;border-radius:11px;padding:11px 3px;background:#e4ebf0;color:#385269;font-size:11px;font-weight:700}.tab.active{background:#173653;color:#fff}.panel{background:#fff;border:1px solid #e1e8ed;border-radius:16px;padding:16px;margin-bottom:13px;box-shadow:0 3px 12px #16365008}h2{font-size:18px;margin:0 0 5px}.sub{font-size:12px;color:#6c7d8d;line-height:1.45;margin:0 0 13px}label{display:block;font-size:12px;font-weight:650;color:#526578;margin:10px 0 5px}input,select,textarea{width:100%;border:1px solid #d6e0e7;border-radius:10px;padding:12px;font:inherit;font-size:15px;background:#fff;color:#172b3d}textarea{min-height:85px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.btn{border:0;border-radius:11px;padding:12px 14px;font:inherit;font-weight:700}.primary{background:#173653;color:white}.secondary{background:#eaf0f4;color:#28445d}.danger{background:#faeaea;color:#a33d3d}.full{width:100%;margin-top:12px}.hidden{display:none!important}.search{margin:10px 0}.entry{border:1px solid #e1e8ed;border-radius:12px;padding:12px;margin-top:9px}.entryhead{display:flex;justify-content:space-between;gap:8px}.entry small{display:block;color:#6c7d8d;margin-top:4px}.tag{font-size:10px;background:#edf2f6;border-radius:20px;padding:5px 8px;height:max-content}.muted{font-size:12px;color:#6c7d8d}.result{background:#edf3f7;border-radius:12px;padding:14px;margin-top:12px}.big{font-size:25px;font-weight:800}.status{font-size:12px;color:#18794e;min-height:18px;margin-top:9px}.empty{text-align:center;padding:24px;color:#718293;font-size:13px}.footer{text-align:center;color:#8997a4;font-size:10px;padding:12px}.notice{background:#fff7e6;border:1px solid #f0dfb8;border-radius:12px;padding:12px;font-size:12px;color:#74551e;margin-bottom:12px}
+</style>
+</head>
+<body>
+<header><div class="brand"><div class="logo">ASV</div><div><h1>FUNERARIOS ASV</h1><p>Tu herramienta profesional de consulta</p></div></div></header>
+<main>
+<div class="tabs">
+<button class="tab active" type="button" data-page="home">Inicio</button>
+<button class="tab" type="button" data-page="records">Información</button>
+<button class="tab" type="button" data-page="calc">Calculadora</button>
+<button class="tab" type="button" data-page="backup">Copias</button>
+</div>
+<section id="page-home" class="page">
+<div class="panel"><h2>Bienvenido</h2><p class="sub">Guarda y consulta tarifas, tasas, procedimientos y notas profesionales. Los datos se almacenan en este iPhone.</p><div class="grid2"><button class="btn primary" id="go-add" type="button">＋ Añadir información</button><button class="btn secondary" id="go-calc" type="button">Calculadora IVA</button></div></div>
+<div class="panel"><h2>Resumen</h2><div class="grid2"><div class="muted">Registros guardados<div class="big" id="count">0</div></div><div class="muted">Almacenamiento<div style="font-weight:750;color:#172b3d;margin-top:5px">Este iPhone</div></div></div></div>
+<div class="notice">No introduzcas datos de familias, expedientes ni información interna confidencial de ASV sin autorización. Haz copias de seguridad periódicas.</div>
+</section>
+<section id="page-records" class="page hidden">
+<div class="panel"><h2>Añadir información</h2><p class="sub">Tarifas, servicios, tasas municipales, procedimientos y contactos.</p>
+<form id="record-form">
+<label for="category">Categoría</label><select id="category"><option>Tarifas funerarias</option><option>Servicios y productos</option><option>Precios e IVA</option><option>Presupuestos</option><option>Tasas de cementerios</option><option>Procedimientos</option><option>iFuner y facturación</option><option>Incidencias y proveedores</option><option>Otros</option></select>
+<label for="title">Nombre o concepto *</label><input id="title" required maxlength="120" placeholder="Ej. Inhumación">
+<div class="grid2"><div><label for="town">Localidad</label><input id="town" placeholder="Ej. Villamartín"></div><div><label for="code">Código / referencia</label><input id="code" placeholder="Opcional"></div></div>
+<div class="grid2"><div><label for="price">Precio sin IVA (€)</label><input id="price" type="number" min="0" step="0.01" placeholder="0,00"></div><div><label for="vat">IVA (%)</label><input id="vat" type="number" min="0" max="100" step="0.01" value="21"></div></div>
+<label for="state">Estado del dato</label><select id="state"><option>Pendiente de verificar</option><option>Vigente confirmado</option><option>Histórico</option><option>Demostración</option></select>
+<label for="source">Fuente / documento</label><input id="source" placeholder="Documento, fecha...">
+<label for="notes">Descripción y observaciones</label><textarea id="notes" placeholder="Detalles, condiciones, unidades, notas..."></textarea>
+<button class="btn primary full" type="submit">Guardar información</button><div class="status" id="form-status" aria-live="polite"></div>
+</form></div>
+<div class="panel"><h2>Información guardada</h2><input class="search" id="search" placeholder="Buscar por concepto, localidad o categoría"><div id="record-list"></div></div>
+</section>
+<section id="page-calc" class="page hidden"><div class="panel"><h2>Calculadora de IVA</h2><p class="sub">Calcula el IVA y el importe final.</p><label for="amount">Importe sin IVA (€)</label><input id="amount" type="number" min="0" step="0.01" placeholder="Ej. 100"><label for="rate">Tipo de IVA (%)</label><input id="rate" type="number" min="0" max="100" step="0.01" value="21"><button class="btn primary full" id="calculate" type="button">Calcular importe</button><div class="result"><div class="muted">IVA</div><div id="vat-result">0,00 €</div><div class="muted" style="margin-top:10px">TOTAL CON IVA</div><div class="big" id="total-result">0,00 €</div></div></div></section>
+<section id="page-backup" class="page hidden"><div class="panel"><h2>Copias de seguridad</h2><p class="sub">Exporta tus registros y guárdalos en Archivos o iCloud Drive. Puedes importar la copia después.</p><button class="btn primary full" id="export" type="button">Descargar copia JSON</button><label class="btn secondary full" for="import-file" style="text-align:center">Restaurar copia JSON</label><input id="import-file" type="file" accept=".json,application/json" class="hidden"><div class="status" id="backup-status" aria-live="polite"></div></div><div class="panel"><h2>Almacenamiento</h2><p class="sub">Los registros se guardan en el navegador de este iPhone. Si borras los datos del sitio o pierdes el dispositivo, podrías perderlos. Guarda copias JSON periódicas.</p><button class="btn danger full" id="clear" type="button">Borrar todos los registros</button></div></section>
+<div class="footer">FUNERARIOS ASV · Versión inicial · Almacenamiento local</div>
+</main>
+<script>
+(function () {
+  'use strict';
+  var DB_NAME='funerarios-asv-ios-v2', STORE='records', db=null;
+  function el(id){return document.getElementById(id);}
+  function openDB(){return new Promise(function(resolve,reject){var req=indexedDB.open(DB_NAME,1);req.onupgradeneeded=function(){if(!req.result.objectStoreNames.contains(STORE)){req.result.createObjectStore(STORE,{keyPath:'id'});}};req.onsuccess=function(){resolve(req.result);};req.onerror=function(){reject(req.error||new Error('No se pudo abrir IndexedDB'));};});}
+  function getAll(){return new Promise(function(resolve,reject){var tx=db.transaction(STORE,'readonly'),req=tx.objectStore(STORE).getAll();req.onsuccess=function(){resolve(req.result||[]);};req.onerror=function(){reject(req.error);};});}
+  function saveRow(row){return new Promise(function(resolve,reject){var tx=db.transaction(STORE,'readwrite');tx.objectStore(STORE).put(row);tx.oncomplete=function(){resolve();};tx.onerror=function(){reject(tx.error);};});}
+  function deleteRow(id){return new Promise(function(resolve,reject){var tx=db.transaction(STORE,'readwrite');tx.objectStore(STORE).delete(id);tx.oncomplete=function(){resolve();};tx.onerror=function(){reject(tx.error);};});}
+  function clearRows(){return new Promise(function(resolve,reject){var tx=db.transaction(STORE,'readwrite');tx.objectStore(STORE).clear();tx.oncomplete=function(){resolve();};tx.onerror=function(){reject(tx.error);};});}
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+  function euro(n){return Number(n||0).toLocaleString('es-ES',{style:'currency',currency:'EUR'});}
+  function go(page){document.querySelectorAll('.page').forEach(function(p){p.classList.add('hidden');});el('page-'+page).classList.remove('hidden');document.querySelectorAll('.tab').forEach(function(t){t.classList.toggle('active',t.getAttribute('data-page')===page);});if(page==='records'){render();}}
+  async function render(){var rows=await getAll();rows.sort(function(a,b){return b.updated.localeCompare(a.updated);});el('count').textContent=String(rows.length);var q=el('search').value.toLowerCase();var found=rows.filter(function(r){return [r.title,r.category,r.town,r.code,r.notes].join(' ').toLowerCase().indexOf(q)!==-1;});var list=el('record-list');if(!found.length){list.innerHTML='<div class="empty">No hay información guardada todavía.</div>';return;}list.innerHTML=found.map(function(r){var price=r.price!==''?'<div style="margin-top:10px;font-weight:750">'+euro(r.price)+' + '+esc(r.vat)+'% IVA = '+euro(Number(r.price)*(1+Number(r.vat)/100))+'</div>':'';return '<article class="entry"><div class="entryhead"><div><strong>'+esc(r.title)+'</strong><small>'+esc(r.category)+' · '+esc(r.town||'Sin localidad')+'</small></div><span class="tag">'+esc(r.state)+'</span></div>'+price+(r.notes?'<p>'+esc(r.notes)+'</p>':'')+'<div class="muted">Fuente: '+esc(r.source||'No indicada')+(r.code?' · Ref. '+esc(r.code):'')+'</div><div style="text-align:right;margin-top:8px"><button class="btn danger" type="button" data-delete="'+esc(r.id)+'">Eliminar</button></div></article>';}).join('');list.querySelectorAll('[data-delete]').forEach(function(b){b.addEventListener('click',async function(){if(confirm('¿Eliminar este registro?')){await deleteRow(b.getAttribute('data-delete'));await render();}});});}
+  document.querySelectorAll('.tab').forEach(function(b){b.addEventListener('click',function(){go(b.getAttribute('data-page'));});});
+  el('go-add').addEventListener('click',function(){go('records');});
+  el('go-calc').addEventListener('click',function(){go('calc');});
+  el('search').addEventListener('input',function(){render().catch(showError);});
+  el('record-form').addEventListener('submit',async function(e){e.preventDefault();try{var row={id:(window.crypto&&crypto.randomUUID)?crypto.randomUUID():String(Date.now())+'-'+Math.random(),category:el('category').value,title:el('title').value.trim(),town:el('town').value.trim(),code:el('code').value.trim(),price:el('price').value,vat:el('vat').value||'0',state:el('state').value,source:el('source').value.trim(),notes:el('notes').value.trim(),created:new Date().toISOString(),updated:new Date().toISOString()};await saveRow(row);el('record-form').reset();el('vat').value='21';el('form-status').textContent='Guardado en este iPhone.';await render();}catch(err){el('form-status').textContent='Error al guardar: '+err.message;}}); 
+  el('calculate').addEventListener('click',function(){var a=Number(el('amount').value||0),r=Number(el('rate').value||0);if(a<0||r<0||r>100){alert('Comprueba el importe y el IVA.');return;}el('vat-result').textContent=euro(a*r/100);el('total-result').textContent=euro(a*(1+r/100));});
+  el('export').addEventListener('click',async function(){try{var payload={app:'FUNERARIOS ASV',version:2,exported:new Date().toISOString(),records:await getAll()};var blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download='funerarios-asv-copia-'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url);},1000);el('backup-status').textContent='Copia JSON preparada.';}catch(err){el('backup-status').textContent='Error: '+err.message;}});
+  el('import-file').addEventListener('change',async function(e){var file=e.target.files&&e.target.files[0];if(!file)return;try{var obj=JSON.parse(await file.text());if(!Array.isArray(obj.records))throw new Error('El archivo no contiene registros');if(!confirm('Se importarán '+obj.records.length+' registros. ¿Continuar?'))return;for(var i=0;i<obj.records.length;i++){var r=obj.records[i];if(!r.id||!r.title)throw new Error('Registro incompleto');await saveRow(r);}el('backup-status').textContent='Copia importada correctamente.';await render();}catch(err){el('backup-status').textContent='No se pudo importar: '+err.message;}e.target.value='';});
+  el('clear').addEventListener('click',async function(){if(confirm('¿Borrar TODOS los registros? Haz antes una copia de seguridad.')){await clearRows();el('backup-status').textContent='Registros eliminados.';await render();}});
+  function showError(err){var msg='No se pudo cargar el almacenamiento: '+(err&&err.message?err.message:String(err));el('count').textContent='!';el('record-list').textContent=msg;el('form-status').textContent=msg;}
+  openDB().then(function(database){db=database;return render();}).catch(showError);
+})();
+</script>
+</body>
 </html>
